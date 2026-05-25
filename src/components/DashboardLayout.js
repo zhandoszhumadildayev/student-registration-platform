@@ -2,6 +2,8 @@ import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
+import { useTheme }from "../context/ThemeContext";
+
 
 function DashboardLayout() {
   const {
@@ -11,6 +13,7 @@ function DashboardLayout() {
     markNotificationsAsRead
   } = useAuth();
 
+  const { theme, toggleTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
@@ -56,19 +59,6 @@ function DashboardLayout() {
         </div>
 
         <div className="hero-right">
-          <div className="profile-mini">
-            <img
-              src={avatarUrl}
-              alt={nickname}
-              className="profile-mini-avatar"
-            />
-
-            <div>
-              <div className="profile-mini-name">{nickname}</div>
-              <div className="profile-mini-email">{user?.email}</div>
-            </div>
-          </div>
-
           <select
             className="language-select"
             value={language}
@@ -91,6 +81,9 @@ function DashboardLayout() {
           <button className="logout-button" onClick={handleLogout}>
             {t.logout}
           </button>
+          <button className="theme-toggle-btn" type="button" onClick={toggleTheme}>
+  {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+</button>
         </div>
       </header>
 
